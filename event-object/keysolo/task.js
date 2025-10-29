@@ -4,27 +4,44 @@ class Game {
     this.wordElement = container.querySelector('.word');
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
+    this.timer = 0;
+    this.timerElement = container.querySelector('.status__timer');
+    this.timerId = 0;
 
     this.reset();
-
+    this.setNewWord();
     this.registerEvents();
   }
 
+  secondsToString (secondsTotal) {
+      let hours   = Math.floor(secondsTotal / 3600);
+      let minutes = Math.floor((secondsTotal - hours * 3600) / 60);
+      let seconds = secondsTotal - hours * 3600 - minutes * 60;
+    
+      return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  }
+  
   reset() {
-    this.setNewWord();
     this.winsElement.textContent = 0;
     this.lossElement.textContent = 0;
   }
 
   registerEvents() {
-    /*
-      TODO:
-      Написать обработчик события, который откликается
-      на каждый введённый символ.
-      В случае правильного ввода символа вызываем this.success()
-      При неправильном вводе символа - this.fail();
-      DOM-элемент текущего символа находится в свойстве this.currentSymbol.
-     */
+     const game = this;
+     document.body.onkeyup = function (e) {
+         if(e.keyCode < 65 || e.keyCode > 90) {
+            return;
+         }
+         
+         if (e.key.toLowerCase() == game.currentSymbol.childNodes[0].textContent) {
+             game.success();
+         }
+         else {
+             game.fail();
+         }
+         
+     }
+     
   }
 
   success() {
@@ -51,11 +68,27 @@ class Game {
     }
     this.setNewWord();
   }
+  
+  checkTimer () {
+      this.timer--;
+      if (this.timer <= 0 ) {
+          this.fail();
+      }
+      else {
+        this.timerElement.textContent = this.secondsToString(this.timer);
+        this.timerId = setTimeout(this.checkTimer.bind(this), 1000);
+      }
+  }
 
   setNewWord() {
+    clearTimeout(this.timerId);
     const word = this.getWord();
+    this.timer = word.length;
+    this.timerElement.textContent = this.secondsToString(this.timer);
 
     this.renderWord(word);
+    this.timerId = setTimeout(this.checkTimer.bind(this), 1000);
+    
   }
 
   getWord() {
