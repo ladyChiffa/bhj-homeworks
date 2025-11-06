@@ -26,7 +26,7 @@ function rotate(rotator) {
     }, speed);
 }
 
-for (i = 0; i < rotators.length; i++) {
+for (let i = 0; i < rotators.length; i++) {
     const rotator = rotators[i];
     const active = rotator.querySelector('.rotator__case_active');
     

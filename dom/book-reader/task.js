@@ -5,7 +5,7 @@ const bgControls = document.querySelector('.book__control_background').children;
 
 function switchFonts (e) {
         const parent = e.target.closest('.book__control_font-size');
-        for (j = 0; j < parent.children.length; j++){
+        for (let j = 0; j < parent.children.length; j++){
             if(parent.children[j] === e.target) {
                 parent.children[j].classList.add('font-size_active');
                 let fontSize = parent.children[j].dataset.size;
@@ -32,7 +32,7 @@ function switchFonts (e) {
 
 function switchColors (e) {
         const parent = e.target.closest('.book__control_color');
-        for (j = 0; j < parent.children.length; j++){
+        for (let j = 0; j < parent.children.length; j++){
             if(parent.children[j] === e.target) {
                 parent.children[j].classList.add('color_active');
                 let color = parent.children[j].dataset.textColor;
@@ -63,7 +63,7 @@ function switchColors (e) {
 
 function switchBg (e) {
         const parent = e.target.closest('.book__control_background');
-        for (j = 0; j < parent.children.length; j++){
+        for (let j = 0; j < parent.children.length; j++){
             if(parent.children[j] === e.target) {
                 parent.children[j].classList.add('color_active');
                 let color = parent.children[j].dataset.bgColor;
@@ -93,16 +93,16 @@ function switchBg (e) {
 
 
 
-for (i = 0; i < fontControls.length; i++) {
+for (let i = 0; i < fontControls.length; i++) {
     fontControls[i].onclick = switchFonts;
 }
-for (i = 0; i < colorControls.length; i++) {
+for (let i = 0; i < colorControls.length; i++) {
     if (colorControls[i].tagName == "SPAN") {
         continue;
     }
     colorControls[i].onclick = switchColors;
 }
-for (i = 0; i < bgControls.length; i++) {
+for (let i = 0; i < bgControls.length; i++) {
     if (bgControls[i].tagName == "SPAN") {
         continue;
     }
