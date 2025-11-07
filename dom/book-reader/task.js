@@ -8,18 +8,11 @@ function switchFonts (e) {
         for (let j = 0; j < parent.children.length; j++){
             if(parent.children[j] === e.target) {
                 parent.children[j].classList.add('font-size_active');
+                
+                bookContent.classList.remove('book_fs-small', 'book_fs-big');
                 let fontSize = parent.children[j].dataset.size;
-                if (fontSize == "small") {
-                    bookContent.classList.remove('book_fs-big');
-                    bookContent.classList.add('book_fs-small');
-                }
-                else if (fontSize == "big") {
-                    bookContent.classList.remove('book_fs-small');
-                    bookContent.classList.add('book_fs-big');
-                }
-                else {
-                    bookContent.classList.remove('book_fs-big');
-                    bookContent.classList.remove('book_fs-small');
+                if (fontSize) {
+                    bookContent.classList.add(`book_fs-${fontSize}`);
                 }
             }
             else {
@@ -35,21 +28,11 @@ function switchColors (e) {
         for (let j = 0; j < parent.children.length; j++){
             if(parent.children[j] === e.target) {
                 parent.children[j].classList.add('color_active');
+                
+                bookContent.classList.remove('book_color-whitesmoke', 'book_color-black', 'book_color-gray');
                 let color = parent.children[j].dataset.textColor;
-                if (color == "gray") {
-                    bookContent.classList.remove('book_color-whitesmoke');
-                    bookContent.classList.remove('book_color-black');
-                    bookContent.classList.add('book_color-gray');
-                }
-                else if (color == "whitesmoke") {
-                    bookContent.classList.remove('book_color-black');
-                    bookContent.classList.remove('book_color-gray');
-                    bookContent.classList.add('book_color-whitesmoke');
-                }
-                else {
-                    bookContent.classList.remove('book_color-gray');
-                    bookContent.classList.remove('book_color-whitesmoke');
-                    bookContent.classList.add('book_color-black');
+                if (color) {
+                    bookContent.classList.add(`book_color-${color}`);
                 }
             }
             else {
@@ -66,21 +49,11 @@ function switchBg (e) {
         for (let j = 0; j < parent.children.length; j++){
             if(parent.children[j] === e.target) {
                 parent.children[j].classList.add('color_active');
+                
+                bookContent.classList.remove('book_bg-white', 'book_bg-black', 'book_bg-gray');
                 let color = parent.children[j].dataset.bgColor;
-                if (color == "gray") {
-                    bookContent.classList.remove('book_bg-white');
-                    bookContent.classList.remove('book_bg-black');
-                    bookContent.classList.add('book_bg-gray');
-                }
-                else if (color == "white") {
-                    bookContent.classList.remove('book_bg-black');
-                    bookContent.classList.remove('book_bg-gray');
-                    bookContent.classList.add('book_bg-white');
-                }
-                else {
-                    bookContent.classList.remove('book_bg-gray');
-                    bookContent.classList.remove('book_bg-white');
-                    bookContent.classList.add('book_bg-black');
+                if (color) {
+                    bookContent.classList.add(`book_bg-${color}`);
                 }
             }
             else {
