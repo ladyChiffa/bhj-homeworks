@@ -2,6 +2,7 @@ body {
   font-family: Arial;
 }
 .cart__products {
+  position:relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,4 +89,19 @@ body {
 
 .product-shadow {
   position: absolute;
+}
+
+.product__remove {
+  color: red;
+  font-size: 30px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.product__remove:hover {
+  color: orange;
+}
+
+.cart__hidden {
+  display:none;
 }
