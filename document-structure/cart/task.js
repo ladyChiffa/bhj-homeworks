@@ -1,25 +1,18 @@
-let cartContent = JSON.parse(localStorage.getItem("Cart"));
-if (!cartContent) {
-  cartContent = [];
-}
+function insertToCartBlock(id, image, quantity) {
+    const cart     = document.getElementsByClassName("cart")[0];
+    const cartContentBlock = document.getElementsByClassName("cart__products")[0];
 
-const cart     = document.getElementsByClassName("cart")[0];
-const cartContentBlock = document.getElementsByClassName("cart__products")[0];
-
-for (let i = 0; i < cartContent.length; i++) {
     let cartElement = document.createElement("div");
-    cartElement.dataset.id = cartContent[i].id;
+    cartElement.dataset.id = id;
     cartElement.className = "cart__product";
-    cartElement.innerHTML = "<img class='cart__product-image' src='" + cartContent[i].image + "'>" +
-                            "<div class='cart__product-count'>" + cartContent[i].quantity + "</div>" + 
+    cartElement.innerHTML = "<img class='cart__product-image' src='" + image + "'>" +
+                            "<div class='cart__product-count'>" + quantity + "</div>" + 
                             "<a href='#' class='product__remove'>&times;</a>";
     cartContentBlock.appendChild(cartElement);
     cartElement.querySelector(".product__remove").onclick = removeFromCart;
     cart.classList.remove("cart__hidden");
+    return cartElement;
 }
-
-const controls = document.getElementsByClassName("product__quantity-control");
-const toCart   = document.getElementsByClassName("product__add");
 
 function controlChange(e) {
     const controlSet = e.target.closest(".product__quantity-controls");
@@ -45,8 +38,10 @@ function addToCart(e) {
     
     const image = product.querySelector(".product__image");
     
+    const cart     = document.getElementsByClassName("cart")[0];
     cart.classList.remove("cart__hidden");
 
+    const cartContentBlock = document.getElementsByClassName("cart__products")[0];
     let cartPosition = null;
     let cartElement = null;
     for (let i = 0; i < cartContent.length; i++) {
@@ -62,39 +57,18 @@ function addToCart(e) {
         cartPosition = cartContent[cartContent.length - 1];
     }
     if (!cartElement) {
-        cartElement = document.createElement("div");
-        cartElement.dataset.id = id;
-        cartElement.className = "cart__product";
-        cartElement.innerHTML = "<img class='cart__product-image' src='" + image.src + "'>" +
-                                    "<div class='cart__product-count'>" + 0 + "</div>" + 
-                                    "<a href='#' class='product__remove'>&times;</a>";
-        cartContentBlock.appendChild(cartElement);
-        cartElement.querySelector(".product__remove").onclick = removeFromCart;
+        cartElement = insertToCartBlock(id, image.src, 0);
     }
        
     cartPosition.quantity = parseInt(cartPosition.quantity) + quantity;
     localStorage.setItem("Cart", JSON.stringify(cartContent));
     
     productQuantity = cartElement.querySelector(".cart__product-count");
-    productQuantity.innerText = parseInt(productQuantity.innerText) + quantity;
-    
-    
-   /*
-    const flyingImage = document.createElement("img");
-    flyingImage.className = "product__image product__image_flying";
-    flyingImage.src = image.src;
-    
-    cart.appendChild(flyingImage);
-    
-    flyingImage.offsetLeft = image.offsetLeft + 100;
-    flyingImage.offsetTop  = image.offsetTop - 100;
-    
-    console.log(image.offsetLeft, image.offsetTop);
-    console.log(flyingImage.offsetLeft, flyingImage.offsetTop);
-    */
+    productQuantity.innerText = parseInt(productQuantity.innerText) + quantity;    
 }
 
 function removeFromCart (e) {
+    const cart     = document.getElementsByClassName("cart")[0];
     const product = e.target.closest(".cart__product");
     const parent = product.closest(".cart__products");
     
@@ -109,9 +83,19 @@ function removeFromCart (e) {
     return false;
 }
 
+let cartContent = JSON.parse(localStorage.getItem("Cart"));
+if (!cartContent) {
+  cartContent = [];
+}
+for (let i = 0; i < cartContent.length; i++) {
+    insertToCartBlock(cartContent[i].id, cartContent[i].image, cartContent[i].quantity);
+}
+
+const controls = document.getElementsByClassName("product__quantity-control");
 for (let i = 0; i < controls.length; i++) {
     controls[i].onclick = controlChange;
 }
+const toCart   = document.getElementsByClassName("product__add");
 for (let i = 0; i < toCart.length; i++) {
     toCart[i].onclick = addToCart;
 }

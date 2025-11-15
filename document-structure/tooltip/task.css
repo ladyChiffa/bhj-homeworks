@@ -11,8 +11,12 @@
   color: red;
 }
 
+body {
+  position:relative;
+}
+
 .tooltip {
-  position: fixed;
+  position: absolute;
   display: none;
   background: black;
   padding: 5px;
